@@ -86,7 +86,28 @@ geo-map-starter/
 
 **Important**: Before running any other components, you must set up the MapTiler TileServer-GL container as detailed in `Docker Set up Maptiler.docx`.
 
-**Basic Docker Setup:**
+**Option 1: Use Pre-built Docker Image (Recommended)**
+```bash
+# Pull the pre-configured image from Docker Hub
+docker pull zion1004/tileserver:latest
+
+# Run the container with your data
+docker run --rm -it -p 8080:8080 \
+  -v "$(pwd)/data":/data \
+  zion1004/tileserver:latest \
+  -c /data/config.json
+```
+
+**Windows PowerShell:**
+```powershell
+# Pull the pre-configured image
+docker pull zion1004/tileserver:latest
+
+# Run with Windows path format
+docker run --rm -it -p 8080:8080 -v "${PWD}/data:/data" zion1004/tileserver:latest -c /data/config.json
+```
+
+**Option 2: Use Official MapTiler Image**
 ```bash
 # Ensure Docker Desktop is running
 docker --version
