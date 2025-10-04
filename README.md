@@ -2,6 +2,12 @@
 
 A real-time cyber attack visualization platform built with React, MapLibre GL JS, and Express.js.
 
+## Live Demo
+
+![GeoSpatial Demo](./GeoSpatial.gif)
+
+*Real-time cyber attack visualization showing animated trajectories between Malaysia/Brunei and Singapore*
+
 ## Docker Setup for MapTiler
 
 Before running the application, you need to set up MapTiler TileServer-GL using Docker. Please refer to the `Docker Set up Maptiler.docx` file for detailed instructions.
