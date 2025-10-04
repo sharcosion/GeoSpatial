@@ -148,36 +148,28 @@ $env:WEBHOOK_SECRET="supersecretnode"
 node index.js
 ```
 
+**Note**: If you're using VS Code with PowerShell as the default terminal, use the PowerShell commands above. The environment variable syntax `$env:VARIABLE_NAME="value"` is specific to PowerShell.
+
 **Verification**: Server should start on http://localhost:4000
 
 ### Step 3: Start React Application (Frontend)
-
-**Purpose**: Handles webhook requests and WebSocket communication
-
-```bash
-# Navigate to webhook server directory
-cd webhook-server
-
-# Install dependencies (first time only)
-npm install
-
-# Start server with environment variable
-WEBHOOK_SECRET=supersecretnode node index.js
-```
-
-**Windows PowerShell:**
-```powershell
-cd webhook-server
-npm install
-$env:WEBHOOK_SECRET="supersecretnode"
-node index.js
-```
-
-**Verification**: Server should start on http://localhost:4000
 
 ### Step 3: Start React Application (Frontend)
 
 **Purpose**: Renders the interactive map and attack visualizations
+
+```bash
+# Navigate to React app directory
+cd react-map
+
+# Install dependencies (first time only)
+npm install
+
+# Start development server
+npm start
+```
+
+**Verification**: Open http://localhost:3000 to see the live attack visualization
 
 ```bash
 # Navigate to React app directory
@@ -213,7 +205,7 @@ Open http://localhost:3000 - you should see:
 
 ### 3. Test Webhook Integration
 
-**PowerShell (Windows):**
+**PowerShell (Windows/VS Code):**
 ```powershell
 $json = '{"origin": [103.8, 1.3], "destination": [104.0, 1.5], "severity": "high"}'
 Invoke-RestMethod -Uri "http://localhost:4000/webhook" `
@@ -221,7 +213,9 @@ Invoke-RestMethod -Uri "http://localhost:4000/webhook" `
   -Headers @{ "x-webhook-secret" = "supersecretnode" }
 ```
 
-**cURL (Linux/macOS):**
+**Note**: Use PowerShell commands if your VS Code terminal is set to PowerShell (default on Windows).
+
+**cURL (Linux/macOS/Git Bash):**
 ```bash
 curl -X POST http://localhost:4000/webhook \
   -H "Content-Type: application/json" \
