@@ -2,6 +2,37 @@
 
 A real-time cyber attack visualization platform built with React, MapLibre GL JS, and Express.js.
 
+## Docker Setup for MapTiler
+
+Before running the application, you need to set up MapTiler TileServer-GL using Docker. Please refer to the `Docker Set up Maptiler.docx` file for detailed instructions.
+
+### Quick Docker Setup
+
+1. **Install Docker Desktop**
+   - Download and install Docker Desktop from https://www.docker.com/products/docker-desktop
+   - Ensure Docker is running before proceeding
+
+2. **Prepare Map Data**
+   - Create a `data` folder in the project root directory
+   - Download OpenStreetMap data (.mbtiles format) 
+   - Create a `config.json` file for TileServer configuration
+   - Set up map styles in the `styles` folder
+
+3. **Run TileServer-GL Container**
+   ```bash
+   docker run --name tileserver --rm -it -p 8080:8080 \
+     -v "$(pwd)/data":/data \
+     maptiler/tileserver-gl:latest \
+     -c /data/config.json
+   ```
+
+4. **Verify Installation**
+   - Open http://localhost:8080 in your browser
+   - You should see the TileServer-GL interface
+   - Map tiles should be accessible for the React application
+
+For detailed setup instructions, configuration examples, and troubleshooting, please refer to the `Docker Set up Maptiler.docx` documentation file included in this repository.
+
 ## Features
 
 ### Real-Time Attack Visualization
@@ -48,18 +79,27 @@ geo-map-starter/
 
 ### Prerequisites
 - Node.js 18+ and npm
-- Docker Desktop (for map tiles)
+- Docker Desktop (installed and running)
 - Modern web browser with WebGL support
 
-### Step 1: Start TileServer-GL (Map Tiles)
+### Step 1: Setup Docker MapTiler (Required First)
 
-**Purpose**: Provides vector tiles and map styles for MapLibre GL JS
+**Important**: Before running any other components, you must set up the MapTiler TileServer-GL container as detailed in `Docker Set up Maptiler.docx`.
 
+**Basic Docker Setup:**
 ```bash
+# Ensure Docker Desktop is running
+docker --version
+
 # Navigate to project root
 cd geo-map-starter
 
-# Start TileServer container
+# Verify data folder exists with required files:
+# - data/config.json (TileServer configuration)
+# - data/*.mbtiles (Map tile data)
+# - data/styles/ (Map style definitions)
+
+# Start TileServer-GL container
 docker run --name tileserver --rm -it -p 8080:8080 \
   -v "$(pwd)/data":/data \
   maptiler/tileserver-gl:latest \
@@ -68,13 +108,49 @@ docker run --name tileserver --rm -it -p 8080:8080 \
 
 **Windows PowerShell:**
 ```powershell
+# Check Docker installation
+docker --version
+
+# Navigate to project directory
 cd "C:\path\to\geo-map-starter"
+
+# Start TileServer with Windows path format
 docker run --name tileserver --rm -it -p 8080:8080 -v "${PWD}/data:/data" maptiler/tileserver-gl:latest -c /data/config.json
 ```
 
-**Verification**: Open http://localhost:8080 to see TileServer dashboard
+**Verification**: 
+- Open http://localhost:8080 to access TileServer-GL interface
+- Ensure map tiles are properly loaded and accessible
+- The React application depends on this service running on port 8080
 
 ### Step 2: Start Webhook Server (Backend)
+
+### Step 2: Start Webhook Server (Backend)
+
+**Purpose**: Handles webhook requests and WebSocket communication
+
+```bash
+# Navigate to webhook server directory
+cd webhook-server
+
+# Install dependencies (first time only)
+npm install
+
+# Start server with environment variable
+WEBHOOK_SECRET=supersecretnode node index.js
+```
+
+**Windows PowerShell:**
+```powershell
+cd webhook-server
+npm install
+$env:WEBHOOK_SECRET="supersecretnode"
+node index.js
+```
+
+**Verification**: Server should start on http://localhost:4000
+
+### Step 3: Start React Application (Frontend)
 
 **Purpose**: Handles webhook requests and WebSocket communication
 
