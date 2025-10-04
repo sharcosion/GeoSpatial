@@ -152,8 +152,6 @@ docker run --name tileserver --rm -it -p 8080:8080 -v "${PWD}/data:/data" maptil
 
 ### Step 2: Start Webhook Server (Backend)
 
-### Step 2: Start Webhook Server (Backend)
-
 **Purpose**: Handles webhook requests and WebSocket communication
 
 ```bash
@@ -178,8 +176,6 @@ node index.js
 **Note**: If you're using VS Code with PowerShell as the default terminal, use the PowerShell commands above. The environment variable syntax `$env:VARIABLE_NAME="value"` is specific to PowerShell.
 
 **Verification**: Server should start on http://localhost:4000
-
-### Step 3: Start React Application (Frontend)
 
 ### Step 3: Start React Application (Frontend)
 
