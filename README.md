@@ -232,12 +232,22 @@ Open http://localhost:3000 - you should see:
 
 ### 3. Test Webhook Integration
 
-**PowerShell (Windows/VS Code):**
+**Single Attack Test - PowerShell (Windows/VS Code):**
 ```powershell
 $json = '{"origin": [103.8, 1.3], "destination": [104.0, 1.5], "severity": "high"}'
 Invoke-RestMethod -Uri "http://localhost:4000/webhook" `
   -Method POST -Body $json -ContentType "application/json" `
   -Headers @{ "x-webhook-secret" = "supersecretnode" }
+```
+
+**Multiple Attacks Example - North Korea to Singapore:**
+```powershell
+# 10 consecutive attacks from North Korea (Pyongyang) to Singapore
+for ($i = 0; $i -lt 10; $i++) {
+    $json = "{`"origin`": [125.7625, 39.0392], `"destination`": [103.8198, 1.3521], `"severity`": `"low`"}"
+    Invoke-RestMethod -Uri "http://localhost:4000/webhook" -Method POST -Body $json -ContentType "application/json" -Headers @{ "x-webhook-secret" = "supersecretnode" }
+    Start-Sleep -Seconds 1
+}
 ```
 
 **Note**: Use PowerShell commands if your VS Code terminal is set to PowerShell (default on Windows).
